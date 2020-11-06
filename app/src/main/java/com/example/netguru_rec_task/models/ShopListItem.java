@@ -4,39 +4,48 @@ public class ShopListItem {
 
     public int id;
 
-    private String itemName;
-    private int quantity;
-    //Check if it works with SQLite. If not change to int: 1 = true, 0 = false
-    private boolean completed;
+    private String listName;
+    private long timestamp;
+    private int groceriesNumber;
+    private int groceriesDone;
 
 
-    ShopListItem(String itemName, int quantity) {
-        this.itemName = itemName;
-        this.quantity = quantity;
-        completed = false;
+    public ShopListItem(String listName, long timestamp) {
+        this.listName = listName;
+        this.timestamp = timestamp;
+        groceriesNumber = 0;
+        groceriesDone = 0;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getListName() {
+        return listName;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setListName(String listName) {
+        this.listName = listName;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public int getGroceriesNumber() {
+        return groceriesNumber;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setGroceriesNumber(int groceriesNumber) {
+        this.groceriesNumber = groceriesNumber;
+    }
+
+    public int getGroceriesDone() {
+        return groceriesDone;
+    }
+
+    public void setGroceriesDone(int groceriesDone) {
+        this.groceriesDone = groceriesDone;
     }
 }
