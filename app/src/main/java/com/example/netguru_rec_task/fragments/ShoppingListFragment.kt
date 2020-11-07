@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,13 +14,15 @@ import com.example.netguru_rec_task.R
 import com.example.netguru_rec_task.adapters.ShoppingListAdapter
 import com.example.netguru_rec_task.data.DatabaseSingleton
 import com.example.netguru_rec_task.models.ShopListItem
+import com.example.netguru_rec_task.viewModels.ShopListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ShoppingListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var recyclerViewAdapter: ShoppingListAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var viewModel: ShopListViewModel
 
     private var itemList = ArrayList<ShopListItem>()
 
@@ -27,6 +31,7 @@ class ShoppingListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel = ViewModelProvider(this).get(ShopListViewModel::class.java)
         return inflater.inflate(R.layout.fragment_shopping_list, container, false)
     }
 
@@ -34,13 +39,13 @@ class ShoppingListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewManager = LinearLayoutManager(requireContext())
-        viewAdapter = ShoppingListAdapter(itemList)
+        recyclerViewAdapter = ShoppingListAdapter(itemList)
 
         recyclerView =
             view.findViewById<RecyclerView>(R.id.fragment_shoppingList_recyclerView).apply {
                 setHasFixedSize(true)
                 layoutManager = viewManager
-                adapter = viewAdapter
+                adapter = recyclerViewAdapter
                 addItemDecoration(
                     DividerItemDecoration(
                         requireContext(),
@@ -49,13 +54,18 @@ class ShoppingListFragment : Fragment() {
                 )
             }
 
+        viewModel.allShopLists.observe(viewLifecycleOwner, Observer { list ->
+            recyclerViewAdapter.setShopList(list)
+        })
+
         val fabAddShoppingList =
             view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
         fabAddShoppingList.setOnClickListener {
             // TODO shopping list creation
 
             val newItem = ShopListItem("Sample list", System.currentTimeMillis())
-            DatabaseSingleton.Instance(requireContext()).shopListItemDao().insertAll(newItem)
+            //DatabaseSingleton.Instance(requireContext()).shopListItemDao().insertAll(newItem)
+            viewModel.insert(newItem)
             // For now wont show on screen, but should be in DB
         }
     }

@@ -44,4 +44,10 @@ class ShoppingListAdapter(private val shopListItems: ArrayList<ShopListItem>) :
     }
 
     override fun getItemCount() = shopListItems.size
+
+    fun setShopList(list: List<ShopListItem>) {
+        shopListItems.clear()
+        shopListItems.addAll(list)
+        notifyDataSetChanged()
+    }
 }

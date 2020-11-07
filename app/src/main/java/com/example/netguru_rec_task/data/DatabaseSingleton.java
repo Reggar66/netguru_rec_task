@@ -13,8 +13,6 @@ public class DatabaseSingleton {
         database = Room.databaseBuilder(context.getApplicationContext(),
                 AppDatabase.class,
                 "shopping-list.db")
-                // TODO Just now, for testing db before viewModel
-                .allowMainThreadQueries()
                 .build();
     }
 
