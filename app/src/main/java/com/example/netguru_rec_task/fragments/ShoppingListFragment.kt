@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.netguru_rec_task.R
+import com.example.netguru_rec_task.ShoppingListBottomSheetDialog
 import com.example.netguru_rec_task.adapters.ShoppingListAdapter
 import com.example.netguru_rec_task.data.DatabaseSingleton
 import com.example.netguru_rec_task.models.ShopListItem
@@ -63,8 +64,10 @@ class ShoppingListFragment : Fragment() {
         fabAddShoppingList.setOnClickListener {
             // TODO shopping list creation
 
-            val newItem = ShopListItem("Sample list", System.currentTimeMillis())
-            viewModel.insert(newItem)
+            val bottomDialog = ShoppingListBottomSheetDialog(viewModel)
+            bottomDialog.show(parentFragmentManager, "BOTTOM_SHEET_DIALOG_SHOPPING_LIST")
+            //val newItem = ShopListItem("Sample list", System.currentTimeMillis())
+            //viewModel.insert(newItem)
         }
     }
 }
