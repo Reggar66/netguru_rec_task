@@ -1,13 +1,25 @@
 package com.example.netguru_rec_task.models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "shop_lists")
 public class ShopListItem {
 
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
+    @ColumnInfo(name = "list_name")
     private String listName;
+    @ColumnInfo(name = "timestamp")
     private long timestamp;
+    @ColumnInfo(name = "groceries_number")
     private int groceriesNumber;
+    @ColumnInfo(name = "groceries_done")
     private int groceriesDone;
+    @ColumnInfo(name = "archived")
+    private boolean archived;
 
 
     public ShopListItem(String listName, long timestamp) {
@@ -15,6 +27,7 @@ public class ShopListItem {
         this.timestamp = timestamp;
         groceriesNumber = 0;
         groceriesDone = 0;
+        archived = false;
     }
 
     public String getListName() {
@@ -47,5 +60,13 @@ public class ShopListItem {
 
     public void setGroceriesDone(int groceriesDone) {
         this.groceriesDone = groceriesDone;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 }

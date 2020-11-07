@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.netguru_rec_task.R
 import com.example.netguru_rec_task.adapters.ShoppingListAdapter
+import com.example.netguru_rec_task.data.DatabaseSingleton
 import com.example.netguru_rec_task.models.ShopListItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -52,10 +53,10 @@ class ShoppingListFragment : Fragment() {
             view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
         fabAddShoppingList.setOnClickListener {
             // TODO shopping list creation
-            for (i in 1..5) {
-                itemList.add(ShopListItem("Sample list $i", System.currentTimeMillis()))
-                viewAdapter.notifyItemInserted(itemList.size - 1)
-            }
+
+            val newItem = ShopListItem("Sample list", System.currentTimeMillis())
+            DatabaseSingleton.Instance(requireContext()).shopListItemDao().insertAll(newItem)
+            // For now wont show on screen, but should be in DB
         }
     }
 }
