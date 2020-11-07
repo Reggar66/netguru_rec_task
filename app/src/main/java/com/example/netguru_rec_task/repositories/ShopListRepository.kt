@@ -9,8 +9,13 @@ import com.example.netguru_rec_task.models.ShopListItem
 class ShopListRepository(private val shopListItemDao: ShopListItemDao) {
 
     val allShopLists: LiveData<List<ShopListItem>> = shopListItemDao.liveDataGetAllShopLists(false)
+    val allArchivedShopLists: LiveData<List<ShopListItem>> = shopListItemDao.liveDataGetAllShopLists(true)
 
     suspend fun insert(shopListItem: ShopListItem) {
         shopListItemDao.insertAll(shopListItem)
+    }
+
+    suspend fun updateArchivedStatus(isArchived: Boolean, listId: Int) {
+        shopListItemDao.updateArchivedStatus(isArchived, listId)
     }
 }

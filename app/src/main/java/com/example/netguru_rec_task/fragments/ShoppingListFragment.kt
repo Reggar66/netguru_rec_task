@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.netguru_rec_task.R
 import com.example.netguru_rec_task.ShoppingListBottomSheetDialog
 import com.example.netguru_rec_task.adapters.ShoppingListAdapter
-import com.example.netguru_rec_task.data.DatabaseSingleton
-import com.example.netguru_rec_task.models.ShopListItem
 import com.example.netguru_rec_task.viewModels.ShopListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -24,8 +22,6 @@ class ShoppingListFragment : Fragment() {
     private lateinit var recyclerViewAdapter: ShoppingListAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var viewModel: ShopListViewModel
-
-    private var itemList = ArrayList<ShopListItem>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +36,7 @@ class ShoppingListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewManager = LinearLayoutManager(requireContext())
-        recyclerViewAdapter = ShoppingListAdapter(itemList)
+        recyclerViewAdapter = ShoppingListAdapter(viewModel)
 
         recyclerView =
             view.findViewById<RecyclerView>(R.id.fragment_shoppingList_recyclerView).apply {

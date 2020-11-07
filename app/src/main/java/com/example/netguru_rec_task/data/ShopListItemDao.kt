@@ -17,4 +17,7 @@ interface ShopListItemDao {
 
     @Query("SELECT * FROM shop_lists WHERE archived = :isArchived")
     fun liveDataGetAllShopLists(isArchived: Boolean): LiveData<List<ShopListItem>>
+
+    @Query("UPDATE shop_lists SET archived = :isArchived WHERE id = :listId")
+    suspend fun updateArchivedStatus(isArchived: Boolean, listId: Int)
 }

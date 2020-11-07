@@ -14,14 +14,21 @@ class ShopListViewModel(application: Application) : AndroidViewModel(application
 
     private val repository: ShopListRepository
     val allShopLists: LiveData<List<ShopListItem>>
+    val allArchivedShopLists: LiveData<List<ShopListItem>>
 
     init {
         val shopListDao = DatabaseSingleton.Instance(application).shopListItemDao()
         repository = ShopListRepository(shopListDao)
         allShopLists = repository.allShopLists
+        allArchivedShopLists = repository.allArchivedShopLists
     }
 
     fun insert(shopListItem: ShopListItem) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(shopListItem)
     }
+
+    fun updateArchivedStatus(isArchived: Boolean, listId: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateArchivedStatus(isArchived, listId)
+        }
 }
