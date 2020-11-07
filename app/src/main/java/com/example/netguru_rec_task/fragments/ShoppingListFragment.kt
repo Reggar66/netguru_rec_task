@@ -64,9 +64,7 @@ class ShoppingListFragment : Fragment() {
             // TODO shopping list creation
 
             val newItem = ShopListItem("Sample list", System.currentTimeMillis())
-            //DatabaseSingleton.Instance(requireContext()).shopListItemDao().insertAll(newItem)
             viewModel.insert(newItem)
-            // For now wont show on screen, but should be in DB
         }
     }
 }
