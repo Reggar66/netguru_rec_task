@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">netguru_rec_task</string>
+    <string name="create_new_shopping_list">Create new shopping list</string>
 </resources>

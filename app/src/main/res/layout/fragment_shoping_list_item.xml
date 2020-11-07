@@ -35,7 +35,7 @@
             android:id="@+id/fragment_shoppingListItem_textView_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="List Name"
+            tools:text="List Name"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
             android:id="@+id/fragment_shoppingListItem_textView_counter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Groceries done 5/25" />
+            tools:text="Groceries done 5/25" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

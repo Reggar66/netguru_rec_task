@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.netguru_rec_task.R
 import com.example.netguru_rec_task.adapters.ShoppingListAdapter
 import com.example.netguru_rec_task.models.ShopListItem
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ShoppingListFragment : Fragment() {
 
@@ -25,11 +26,6 @@ class ShoppingListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        for (i in 1..20) {
-            itemList.add(ShopListItem("Sample list $i", 123456))
-        }
-
         return inflater.inflate(R.layout.fragment_shopping_list, container, false)
     }
 
@@ -51,5 +47,15 @@ class ShoppingListFragment : Fragment() {
                     )
                 )
             }
+
+        val fabAddShoppingList =
+            view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
+        fabAddShoppingList.setOnClickListener {
+            // TODO shopping list creation
+            for (i in 1..5) {
+                itemList.add(ShopListItem("Sample list $i", System.currentTimeMillis()))
+                viewAdapter.notifyItemInserted(itemList.size - 1)
+            }
+        }
     }
 }
