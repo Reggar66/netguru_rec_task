@@ -14,9 +14,10 @@ public class GroceryItem {
     private String itemName;
     @ColumnInfo(name = "quantity")
     private int quantity;
-    //Check if it works with SQLite. If not change to int: 1 = true, 0 = false
     @ColumnInfo(name = "completed")
     private boolean completed;
+    @ColumnInfo(name = "shopping_list_id")
+    private int ShoppingListId;
 
 
     GroceryItem(String itemName, int quantity) {
@@ -47,5 +48,13 @@ public class GroceryItem {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public int getShoppingListId() {
+        return ShoppingListId;
+    }
+
+    public void setShoppingListId(int shoppingListId) {
+        ShoppingListId = shoppingListId;
     }
 }

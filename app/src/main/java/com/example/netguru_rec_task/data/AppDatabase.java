@@ -8,7 +8,7 @@ import com.example.netguru_rec_task.models.ShopListItem;
 
 @Database(entities = {
         ShopListItem.class,
-        GroceryItem.class}, version = 1)
+        GroceryItem.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ShopListItemDao shopListItemDao();
 }
