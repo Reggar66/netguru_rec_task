@@ -17,12 +17,13 @@ public class GroceryItem {
     @ColumnInfo(name = "completed")
     private boolean completed;
     @ColumnInfo(name = "shopping_list_id")
-    private int ShoppingListId;
+    private int shoppingListId;
 
 
-    GroceryItem(String itemName, int quantity) {
+    public GroceryItem(String itemName, int quantity, int shoppingListId) {
         this.itemName = itemName;
         this.quantity = quantity;
+        this.shoppingListId = shoppingListId;
         completed = false;
     }
 
@@ -51,10 +52,10 @@ public class GroceryItem {
     }
 
     public int getShoppingListId() {
-        return ShoppingListId;
+        return shoppingListId;
     }
 
     public void setShoppingListId(int shoppingListId) {
-        ShoppingListId = shoppingListId;
+        this.shoppingListId = shoppingListId;
     }
 }

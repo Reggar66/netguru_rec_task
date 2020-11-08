@@ -11,4 +11,6 @@ import com.example.netguru_rec_task.models.ShopListItem;
         GroceryItem.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ShopListItemDao shopListItemDao();
+
+    public abstract GroceryItemDao groceryItemDao();
 }

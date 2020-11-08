@@ -71,7 +71,7 @@ class ShoppingListAdapter(
         val item = shopListItems[position]
         holder.textViewListName.text = item.listName
         holder.textViewGroceriesCounter.text =
-            // TODO extract to string resources
+                // TODO extract to string resources
             """Groceries done ${item.groceriesDone}/${item.groceriesNumber}"""
     }
 
@@ -80,6 +80,7 @@ class ShoppingListAdapter(
     fun setShopList(list: List<ShopListItem>) {
         shopListItems.clear()
         shopListItems.addAll(list)
+        //TODO DiffUtil
         notifyDataSetChanged()
     }
 }

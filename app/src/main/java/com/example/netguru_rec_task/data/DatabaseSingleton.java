@@ -33,4 +33,8 @@ public class DatabaseSingleton {
     public ShopListItemDao shopListItemDao() {
         return database.shopListItemDao();
     }
+
+    public GroceryItemDao groceryItemDao() {
+        return database.groceryItemDao();
+    }
 }
