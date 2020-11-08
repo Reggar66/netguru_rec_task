@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.tabs.TabLayout
+        android:elevation="4dp"
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tabGravity="fill"
-        tools:background="@color/black" />
+        android:background="@color/black" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"

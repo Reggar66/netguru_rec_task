@@ -5,22 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.netguru_rec_task.R
-import com.example.netguru_rec_task.ShoppingListBottomSheetDialog
 import com.example.netguru_rec_task.adapters.ShoppingListAdapter
-import com.example.netguru_rec_task.models.ShopListItem
 import com.example.netguru_rec_task.viewModels.ShopListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener {
+class GroceriesListFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: ShoppingListAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var viewModel: ShopListViewModel
@@ -39,7 +35,9 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
 
         viewManager = LinearLayoutManager(requireContext())
         recyclerViewAdapter = ShoppingListAdapter(viewModel)
-        recyclerViewAdapter.onItemClickListener = this
+        val fabAddShoppingList =
+            view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
+        fabAddShoppingList.hide()
 
         recyclerView =
             view.findViewById<RecyclerView>(R.id.fragment_shoppingList_recyclerView).apply {
@@ -54,24 +52,7 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
                 )
             }
 
-        viewModel.allShopLists.observe(viewLifecycleOwner, Observer { list ->
-            recyclerViewAdapter.setShopList(list)
-        })
+        // TODO show items via viewModel
 
-        val fabAddShoppingList =
-            view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
-        fabAddShoppingList.setOnClickListener {
-
-            val bottomDialog = ShoppingListBottomSheetDialog(viewModel)
-            bottomDialog.show(parentFragmentManager, "BOTTOM_SHEET_DIALOG_SHOPPING_LIST")
-        }
     }
-
-    override fun onItemClickListener(shoppingList: ShopListItem) {
-        val action = MainFragmentDirections.actionMainFragmentToGroceriesListFragment()
-        val navController = findNavController()
-        navController.navigate(action)
-    }
-
-
 }
