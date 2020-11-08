@@ -14,5 +14,10 @@
     <fragment
         android:id="@+id/groceriesListFragment"
         android:name="com.example.netguru_rec_task.fragments.GroceriesListFragment"
-        android:label="GroceriesListFragment" />
+        android:label="GroceriesListFragment" >
+        <argument
+            android:name="shopListId"
+            app:argType="integer"
+            android:defaultValue="0"/>
+    </fragment>
 </navigation>

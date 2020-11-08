@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class GroceriesListFragment : Fragment() {
 
+    val args: GroceriesListFragmentArgs by navArgs()
+
     lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: GroceriesAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
@@ -30,20 +33,20 @@ class GroceriesListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = GroceriesViewModel(requireActivity().application, 0)
+        viewModel = GroceriesViewModel(requireActivity().application, args.shopListId)
         return inflater.inflate(R.layout.fragment_shopping_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //TODO passing listId
         viewManager = LinearLayoutManager(requireContext())
         recyclerViewAdapter = GroceriesAdapter()
         val fabAddGrocery =
             view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
         fabAddGrocery.setOnClickListener {
-            viewModel.insert(GroceryItem("Sample", 2, 0))
+            // TODO show dialog/fragment for grocery creation
+            viewModel.insert(GroceryItem("Sample", 2, args.shopListId))
         }
 
         recyclerView =
@@ -58,9 +61,6 @@ class GroceriesListFragment : Fragment() {
                     )
                 )
             }
-
-        // TODO show items via viewModel
-
         viewModel.allGroceriesForShopList.observe(viewLifecycleOwner, Observer { groceries ->
             recyclerViewAdapter.setGroceries(groceries)
         })

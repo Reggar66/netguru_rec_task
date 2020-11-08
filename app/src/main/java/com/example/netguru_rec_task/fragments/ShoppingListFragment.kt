@@ -68,7 +68,8 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
     }
 
     override fun onItemClickListener(shoppingList: ShopListItem) {
-        val action = MainFragmentDirections.actionMainFragmentToGroceriesListFragment()
+        val action =
+            MainFragmentDirections.actionMainFragmentToGroceriesListFragment(shoppingList.id)
         val navController = findNavController()
         navController.navigate(action)
     }
