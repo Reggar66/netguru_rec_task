@@ -26,7 +26,7 @@ class ShoppingListAdapter(
     }
 
     interface OnItemLongClickListener {
-
+        fun onItemLongClickListener(shoppingList: ShopListItem)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
