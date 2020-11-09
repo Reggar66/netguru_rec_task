@@ -20,4 +20,8 @@ class GroceryItemRepository(
     suspend fun getParentShopList(shopListId: Int): ShopListItem {
         return groceryItemDao.getParentShopList(shopListId)
     }
+
+    suspend fun updateCompletionStatus(isCompleted: Boolean, groceryId: Int) {
+        groceryItemDao.updateCompletionStatus(isCompleted, groceryId)
+    }
 }

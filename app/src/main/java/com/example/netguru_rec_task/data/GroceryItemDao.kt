@@ -23,4 +23,7 @@ interface GroceryItemDao {
     @Query("SELECT * FROM shop_lists WHERE id = :shopListId")
     suspend fun getParentShopList(shopListId: Int): ShopListItem
 
+    @Query("UPDATE groceries_list SET completed = :isCompleted WHERE id = :groceryId")
+    suspend fun updateCompletionStatus(isCompleted: Boolean, groceryId: Int)
+
 }

@@ -21,7 +21,8 @@ import com.example.netguru_rec_task.viewModels.GroceriesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
-class GroceriesListFragment : Fragment() {
+class GroceriesListFragment : Fragment(),
+    GroceriesAdapter.OnItemClickListener {
 
     val args: GroceriesListFragmentArgs by navArgs()
 
@@ -59,6 +60,7 @@ class GroceriesListFragment : Fragment() {
 
         viewManager = LinearLayoutManager(requireContext())
         recyclerViewAdapter = GroceriesAdapter()
+        recyclerViewAdapter.onItemClickListener = this
         val fabAddGrocery =
             view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
         fabAddGrocery.setOnClickListener {
@@ -82,5 +84,10 @@ class GroceriesListFragment : Fragment() {
             recyclerViewAdapter.setGroceries(groceries)
         })
 
+    }
+
+    override fun onItemClickListener(groceriesItem: GroceryItem, position: Int) {
+        viewModel.updateCompletionStatus(!groceriesItem.isCompleted, groceriesItem.id)
+        recyclerViewAdapter.notifyItemChanged(position)
     }
 }

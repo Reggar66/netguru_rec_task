@@ -12,12 +12,26 @@ class GroceriesAdapter() :
     RecyclerView.Adapter<GroceriesAdapter.ViewHolder>() {
 
     private val groceries = ArrayList<GroceryItem>()
+    var onItemClickListener: OnItemClickListener? = null
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    interface OnItemClickListener {
+        fun onItemClickListener(groceriesItem: GroceryItem, position: Int)
+    }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewListName: TextView =
             itemView.findViewById(R.id.fragment_shoppingListItem_textView_name)
         val textViewGroceriesCounter: TextView =
             itemView.findViewById(R.id.fragment_shoppingListItem_textView_counter)
+
+        init {
+            itemView.setOnClickListener {
+                onItemClickListener?.onItemClickListener(
+                    groceries[adapterPosition],
+                    adapterPosition
+                )
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,7 +44,12 @@ class GroceriesAdapter() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = groceries[position]
         holder.textViewListName.text = item.itemName
-        holder.textViewGroceriesCounter.text = item.quantity.toString()
+        // TODO change it to show completion in different way
+        if (item.isCompleted) {
+            holder.textViewGroceriesCounter.text = "Completed"
+        } else {
+            holder.textViewGroceriesCounter.text = item.quantity.toString()
+        }
     }
 
     override fun getItemCount(): Int {

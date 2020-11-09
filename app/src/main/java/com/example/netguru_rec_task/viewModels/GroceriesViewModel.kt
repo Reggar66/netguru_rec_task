@@ -1,6 +1,7 @@
 package com.example.netguru_rec_task.viewModels
 
 import android.app.Application
+import android.text.BoringLayout
 import androidx.lifecycle.*
 import com.example.netguru_rec_task.data.DatabaseSingleton
 import com.example.netguru_rec_task.models.GroceryItem
@@ -30,11 +31,19 @@ class GroceriesViewModel(
         return repository.getParentShopList(shopListId)
     }
 
+    fun updateCompletionStatus(isCompleted: Boolean, groceryId: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateCompletionStatus(isCompleted, groceryId)
+        }
+
     /**
      * Factory
      */
 
-    class GroceriesViewModelFactory(private val application: Application, private val listItemId: Int) :
+    class GroceriesViewModelFactory(
+        private val application: Application,
+        private val listItemId: Int
+    ) :
         ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return GroceriesViewModel(application, listItemId) as T
