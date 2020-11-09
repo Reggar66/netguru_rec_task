@@ -34,8 +34,8 @@ class GroceriesViewModel(
      * Factory
      */
 
-    class GroceriesViewModelFactory(val application: Application, val listItemId: Int) :
-        ViewModelProvider.Factory {
+    class GroceriesViewModelFactory(private val application: Application, private val listItemId: Int) :
+        ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return GroceriesViewModel(application, listItemId) as T
         }

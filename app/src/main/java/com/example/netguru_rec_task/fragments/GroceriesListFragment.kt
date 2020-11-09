@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
@@ -14,11 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.netguru_rec_task.R
 import com.example.netguru_rec_task.adapters.GroceriesAdapter
-import com.example.netguru_rec_task.adapters.ShoppingListAdapter
 import com.example.netguru_rec_task.models.GroceryItem
 import com.example.netguru_rec_task.models.ShopListItem
 import com.example.netguru_rec_task.viewModels.GroceriesViewModel
-import com.example.netguru_rec_task.viewModels.ShopListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
@@ -38,7 +37,14 @@ class GroceriesListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Retrieve ViewModel
-        viewModel = GroceriesViewModel(requireActivity().application, args.shopListId)
+        viewModel = ViewModelProvider(
+            this,
+            GroceriesViewModel.GroceriesViewModelFactory(
+                requireActivity().application,
+                args.shopListId
+            )
+        ).get(GroceriesViewModel::class.java)
+
         // Retrieve parent shopList and set fragment name
         viewModel.viewModelScope.launch {
             parentShopList = viewModel.getParentShopList(args.shopListId)
