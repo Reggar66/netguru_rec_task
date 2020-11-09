@@ -36,6 +36,21 @@ class GroceriesViewModel(
             repository.updateCompletionStatus(isCompleted, groceryId)
         }
 
+    fun updateGroceriesNumbers(shopListId: Int) =
+        viewModelScope.launch(Dispatchers.IO) {
+            val groceries = allGroceriesForShopList.value
+            val numb = groceries?.size ?: 0
+            var done = 0
+
+            if (groceries != null) {
+                for (grocery in groceries) {
+                    if (grocery.isCompleted)
+                        done++
+                }
+            }
+            repository.updateGroceriesNumbers(numb, done, shopListId)
+        }
+
     /**
      * Factory
      */

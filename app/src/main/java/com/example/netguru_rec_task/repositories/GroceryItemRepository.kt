@@ -24,4 +24,8 @@ class GroceryItemRepository(
     suspend fun updateCompletionStatus(isCompleted: Boolean, groceryId: Int) {
         groceryItemDao.updateCompletionStatus(isCompleted, groceryId)
     }
+
+    suspend fun updateGroceriesNumbers(groceriesNumber: Int, groceriesDone: Int, shopListId: Int) {
+        groceryItemDao.updateGroceriesNumbers(groceriesNumber, groceriesDone, shopListId)
+    }
 }

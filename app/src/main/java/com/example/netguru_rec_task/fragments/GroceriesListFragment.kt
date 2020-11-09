@@ -82,6 +82,7 @@ class GroceriesListFragment : Fragment(),
             }
         viewModel.allGroceriesForShopList.observe(viewLifecycleOwner, Observer { groceries ->
             recyclerViewAdapter.setGroceries(groceries)
+            viewModel.updateGroceriesNumbers(args.shopListId)
         })
 
     }

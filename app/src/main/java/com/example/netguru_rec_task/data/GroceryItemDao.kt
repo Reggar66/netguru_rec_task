@@ -26,4 +26,6 @@ interface GroceryItemDao {
     @Query("UPDATE groceries_list SET completed = :isCompleted WHERE id = :groceryId")
     suspend fun updateCompletionStatus(isCompleted: Boolean, groceryId: Int)
 
+    @Query("UPDATE shop_lists SET groceries_number = :groceriesNumber, groceries_done = :groceriesDone WHERE id = :shopListId")
+    suspend fun updateGroceriesNumbers(groceriesNumber: Int, groceriesDone: Int, shopListId: Int)
 }
