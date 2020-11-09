@@ -124,7 +124,8 @@ class GroceriesListFragment : Fragment(),
         View.OnClickListener {
         override fun onClick(p0: View?) {
             val name = editTextName.text.toString()
-            val quantity = editTextQuantity.text.toString().toInt()
+            val quantityString = editTextQuantity.text.toString()
+            val quantity = if (quantityString.isNotEmpty()) quantityString.toInt() else 0
             viewModel.insert(
                 GroceryItem(
                     name,

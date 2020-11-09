@@ -1,5 +1,6 @@
 package com.example.netguru_rec_task.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.netguru_rec_task.utils.GroceryDiffUtilCallback
 class GroceriesAdapter() :
     RecyclerView.Adapter<GroceriesAdapter.ViewHolder>() {
 
+    private lateinit var context: Context
     private val groceries = ArrayList<GroceryItem>()
     var onItemClickListener: OnItemClickListener? = null
 
@@ -37,7 +39,8 @@ class GroceriesAdapter() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
+        context = parent.context
+        val itemView = LayoutInflater.from(context)
             .inflate(R.layout.fragment_shoping_list_item, parent, false)
 
         return ViewHolder(itemView)
@@ -46,9 +49,11 @@ class GroceriesAdapter() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = groceries[position]
         holder.textViewListName.text = item.itemName
-        // TODO change it to show completion in different way
         if (item.isCompleted) {
-            holder.textViewGroceriesCounter.text = "Completed"
+            holder.textViewListName.apply {
+                paintFlags = paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+            }
+            holder.textViewGroceriesCounter.text = context.getString(R.string.completed)
         } else {
             holder.textViewGroceriesCounter.text = item.quantity.toString()
         }
