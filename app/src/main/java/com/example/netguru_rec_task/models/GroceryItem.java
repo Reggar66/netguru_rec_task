@@ -2,6 +2,7 @@ package com.example.netguru_rec_task.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "groceries_list")
@@ -21,6 +22,8 @@ public class GroceryItem {
     @ColumnInfo(name = "shopping_list_id")
     private int shoppingListId;
 
+    @Ignore
+    private boolean selected = false;
 
     public GroceryItem(String itemName, long timestamp, int quantity, int shoppingListId) {
         this.itemName = itemName;
@@ -68,5 +71,13 @@ public class GroceryItem {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }
