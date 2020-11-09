@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -18,19 +20,21 @@ import com.example.netguru_rec_task.adapters.GroceriesAdapter
 import com.example.netguru_rec_task.models.GroceryItem
 import com.example.netguru_rec_task.models.ShopListItem
 import com.example.netguru_rec_task.viewModels.GroceriesViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
 class GroceriesListFragment : Fragment(),
     GroceriesAdapter.OnItemClickListener {
 
-    val args: GroceriesListFragmentArgs by navArgs()
+    private val args: GroceriesListFragmentArgs by navArgs()
 
     lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: GroceriesAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var viewModel: GroceriesViewModel
     private lateinit var parentShopList: ShopListItem
+    private lateinit var bottomSheet: View
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,16 +62,32 @@ class GroceriesListFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewManager = LinearLayoutManager(requireContext())
-        recyclerViewAdapter = GroceriesAdapter()
-        recyclerViewAdapter.onItemClickListener = this
+        // Bottom sheet
+        bottomSheet = view.findViewById(R.id.bottomSheet)
+        bottomSheet.visibility = View.VISIBLE
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        val editTextName = view.findViewById<EditText>(R.id.bottomSheet_editText_name)
+        val editTextQuantity = view.findViewById<EditText>(R.id.bottomSheet_editText_quantity)
+        val fabApplyGrocery =
+            view.findViewById<FloatingActionButton>(R.id.bottomSheet_floatingActionButton_apply)
+        fabApplyGrocery.setOnClickListener(OnApplyListener(editTextName, editTextQuantity))
         val fabAddGrocery =
             view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
         fabAddGrocery.setOnClickListener {
-            // TODO show dialog/fragment for grocery creation
-            viewModel.insert(GroceryItem("Sample", System.currentTimeMillis(), 2, args.shopListId))
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            editTextName.requestFocus()
+        }
+        val imageViewClose = view.findViewById<ImageView>(R.id.bottomSheet_imageView_hide)
+        imageViewClose.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
 
+        // RecyclerView setup
+        viewManager = LinearLayoutManager(requireContext())
+        recyclerViewAdapter = GroceriesAdapter()
+        recyclerViewAdapter.onItemClickListener = this
         recyclerView =
             view.findViewById<RecyclerView>(R.id.fragment_shoppingList_recyclerView).apply {
                 setHasFixedSize(true)
@@ -80,6 +100,8 @@ class GroceriesListFragment : Fragment(),
                     )
                 )
             }
+
+        // Observing data and updating UI
         viewModel.allGroceriesForShopList.observe(viewLifecycleOwner, Observer { groceries ->
             recyclerViewAdapter.setGroceries(groceries)
             viewModel.updateGroceriesNumbers(args.shopListId)
@@ -89,5 +111,33 @@ class GroceriesListFragment : Fragment(),
 
     override fun onItemClickListener(groceriesItem: GroceryItem, position: Int) {
         viewModel.updateCompletionStatus(!groceriesItem.isCompleted, groceriesItem.id)
+    }
+
+    /**
+     * Inner classes
+     */
+
+    inner class OnApplyListener(
+        private val editTextName: EditText,
+        private val editTextQuantity: EditText
+    ) :
+        View.OnClickListener {
+        override fun onClick(p0: View?) {
+            val name = editTextName.text.toString()
+            val quantity = editTextQuantity.text.toString().toInt()
+            viewModel.insert(
+                GroceryItem(
+                    name,
+                    System.currentTimeMillis(),
+                    quantity,
+                    args.shopListId
+                )
+            )
+
+            editTextName.text.clear()
+            editTextQuantity.text.clear()
+            editTextName.requestFocus()
+        }
+
     }
 }
