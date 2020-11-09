@@ -15,7 +15,7 @@ interface ShopListItemDao {
     @Delete
     suspend fun delete(shopListItem: ShopListItem?)
 
-    @Query("SELECT * FROM shop_lists WHERE archived = :isArchived")
+    @Query("SELECT * FROM shop_lists WHERE archived = :isArchived ORDER BY timestamp ASC")
     fun liveDataGetAllShopLists(isArchived: Boolean): LiveData<List<ShopListItem>>
 
     @Query("UPDATE shop_lists SET archived = :isArchived WHERE id = :listId")

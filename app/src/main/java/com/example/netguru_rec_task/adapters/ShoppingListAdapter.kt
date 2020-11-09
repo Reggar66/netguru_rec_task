@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.netguru_rec_task.R
 import com.example.netguru_rec_task.models.ShopListItem
+import com.example.netguru_rec_task.utils.ShopListDiffUtilCallback
 import com.example.netguru_rec_task.viewModels.ShopListViewModel
 
 class ShoppingListAdapter(
@@ -77,10 +79,13 @@ class ShoppingListAdapter(
 
     override fun getItemCount() = shopListItems.size
 
-    fun setShopList(list: List<ShopListItem>) {
-        shopListItems.clear()
-        shopListItems.addAll(list)
-        //TODO DiffUtil
-        notifyDataSetChanged()
+    fun setShopList(shopListItems: List<ShopListItem>) {
+        val shopListDiffUtilCallback = ShopListDiffUtilCallback(this.shopListItems, shopListItems)
+        val diffResult = DiffUtil.calculateDiff(shopListDiffUtilCallback)
+
+        this.shopListItems.clear()
+        this.shopListItems.addAll(shopListItems)
+
+        diffResult.dispatchUpdatesTo(this)
     }
 }
