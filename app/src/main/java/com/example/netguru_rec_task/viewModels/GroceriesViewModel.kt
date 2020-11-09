@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.netguru_rec_task.data.DatabaseSingleton
 import com.example.netguru_rec_task.models.GroceryItem
+import com.example.netguru_rec_task.models.ShopListItem
 import com.example.netguru_rec_task.repositories.GroceryItemRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +24,10 @@ class GroceriesViewModel(
 
     fun insert(groceryItem: GroceryItem) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(groceryItem)
+    }
+
+    suspend fun getParentShopList(shopListId: Int): ShopListItem {
+        return repository.getParentShopList(shopListId)
     }
 
     /**

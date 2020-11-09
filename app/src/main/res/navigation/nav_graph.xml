@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
     app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.netguru_rec_task.fragments.MainFragment"
-        android:label="MainFragment" >
+        android:label="@string/shoppingList">
         <action
             android:id="@+id/action_mainFragment_to_groceriesListFragment"
             app:destination="@id/groceriesListFragment" />
     </fragment>
     <fragment
         android:id="@+id/groceriesListFragment"
-        android:name="com.example.netguru_rec_task.fragments.GroceriesListFragment"
-        android:label="GroceriesListFragment" >
+        android:name="com.example.netguru_rec_task.fragments.GroceriesListFragment">
         <argument
             android:name="shopListId"
-            app:argType="integer"
-            android:defaultValue="0"/>
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
 </navigation>
