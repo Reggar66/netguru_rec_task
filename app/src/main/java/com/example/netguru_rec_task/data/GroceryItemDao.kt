@@ -17,7 +17,7 @@ interface GroceryItemDao {
     @Delete
     suspend fun delete(groceryItem: GroceryItem)
 
-    @Query("SELECT * FROM groceries_list WHERE shopping_list_id = :shopListId")
+    @Query("SELECT * FROM groceries_list WHERE shopping_list_id = :shopListId ORDER BY completed ASC, timestamp ASC")
     fun liveDataGetAllGroceriesForShopList(shopListId: Int): LiveData<List<GroceryItem>>
 
     @Query("SELECT * FROM shop_lists WHERE id = :shopListId")

@@ -65,7 +65,7 @@ class GroceriesListFragment : Fragment(),
             view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
         fabAddGrocery.setOnClickListener {
             // TODO show dialog/fragment for grocery creation
-            viewModel.insert(GroceryItem("Sample", 2, args.shopListId))
+            viewModel.insert(GroceryItem("Sample", System.currentTimeMillis(), 2, args.shopListId))
         }
 
         recyclerView =
@@ -88,6 +88,5 @@ class GroceriesListFragment : Fragment(),
 
     override fun onItemClickListener(groceriesItem: GroceryItem, position: Int) {
         viewModel.updateCompletionStatus(!groceriesItem.isCompleted, groceriesItem.id)
-        recyclerViewAdapter.notifyItemChanged(position)
     }
 }

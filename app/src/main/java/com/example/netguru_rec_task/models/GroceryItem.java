@@ -12,6 +12,8 @@ public class GroceryItem {
 
     @ColumnInfo(name = "item_name")
     private String itemName;
+    @ColumnInfo(name = "timestamp")
+    private long timestamp;
     @ColumnInfo(name = "quantity")
     private int quantity;
     @ColumnInfo(name = "completed")
@@ -20,8 +22,9 @@ public class GroceryItem {
     private int shoppingListId;
 
 
-    public GroceryItem(String itemName, int quantity, int shoppingListId) {
+    public GroceryItem(String itemName, long timestamp, int quantity, int shoppingListId) {
         this.itemName = itemName;
+        this.timestamp = timestamp;
         this.quantity = quantity;
         this.shoppingListId = shoppingListId;
         completed = false;
@@ -57,5 +60,13 @@ public class GroceryItem {
 
     public void setShoppingListId(int shoppingListId) {
         this.shoppingListId = shoppingListId;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

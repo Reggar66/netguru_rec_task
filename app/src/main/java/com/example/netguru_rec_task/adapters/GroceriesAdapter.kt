@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.netguru_rec_task.R
 import com.example.netguru_rec_task.models.GroceryItem
+import com.example.netguru_rec_task.utils.GroceryDiffUtilCallback
 
 class GroceriesAdapter() :
     RecyclerView.Adapter<GroceriesAdapter.ViewHolder>() {
@@ -57,9 +59,12 @@ class GroceriesAdapter() :
     }
 
     fun setGroceries(groceries: List<GroceryItem>) {
+        val groceryDiffUtilCallback = GroceryDiffUtilCallback(this.groceries, groceries)
+        val diffResult = DiffUtil.calculateDiff(groceryDiffUtilCallback)
+
         this.groceries.clear()
         this.groceries.addAll(groceries)
-        //TODO DiffUtil
-        notifyDataSetChanged()
+
+        diffResult.dispatchUpdatesTo(this)
     }
 }
