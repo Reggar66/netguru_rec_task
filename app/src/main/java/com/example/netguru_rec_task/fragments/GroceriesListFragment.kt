@@ -114,9 +114,9 @@ class GroceriesListFragment : Fragment(),
     }
 
     /**
-     * Inner classes
+     * Listener for bottom sheet button.
+     * Creates new grocery.
      */
-
     inner class OnApplyListener(
         private val editTextName: EditText,
         private val editTextQuantity: EditText
