@@ -5,8 +5,9 @@
     <string name="onion">Onion</string>
     <string name="quantity_10">10</string>
     <string name="completed">Completed</string>
-    <string name="delete_groceries">Delete groceries</string>
+    <string name="delete_items">Delete items</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="are_you_sure">Are you sure?</string>
+    <string name="archive_item">Archive item</string>
 </resources>

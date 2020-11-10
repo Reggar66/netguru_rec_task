@@ -27,8 +27,10 @@ class ShopListViewModel(application: Application) : AndroidViewModel(application
         repository.insert(shopListItem)
     }
 
-    fun updateArchivedStatus(isArchived: Boolean, listId: Int) =
+    fun updateArchivedStatus(isArchived: Boolean, selectedList: List<ShopListItem>) =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateArchivedStatus(isArchived, listId)
+            for (shopList in selectedList) {
+                repository.updateArchivedStatus(isArchived, shopList.id)
+            }
         }
 }

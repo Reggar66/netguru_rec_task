@@ -1,5 +1,6 @@
 package com.example.netguru_rec_task.fragments
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.netguru_rec_task.ConfirmBottomDialog
 import com.example.netguru_rec_task.R
 import com.example.netguru_rec_task.ShoppingListBottomSheetDialog
 import com.example.netguru_rec_task.adapters.ShoppingListAdapter
@@ -25,6 +27,9 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
     private lateinit var recyclerViewAdapter: ShoppingListAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var viewModel: ShopListViewModel
+
+    private lateinit var fabAddShoppingList: FloatingActionButton
+    private lateinit var fabArchive: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,13 +65,14 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
             recyclerViewAdapter.setShopList(list)
         })
 
-        val fabAddShoppingList =
-            view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
+        fabAddShoppingList = view.findViewById(R.id.fragment_shoppingList_fab)
         fabAddShoppingList.setOnClickListener {
-
             val bottomDialog = ShoppingListBottomSheetDialog(viewModel)
             bottomDialog.show(parentFragmentManager, "BOTTOM_SHEET_DIALOG_SHOPPING_LIST")
         }
+
+        fabArchive = view.findViewById(R.id.fragment_shoppingList_fab_archive)
+        fabArchive.setOnClickListener(OnArchiveListener())
     }
 
     override fun onItemClickListener(shoppingList: ShopListItem) {
@@ -77,8 +83,37 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
     }
 
     override fun onItemLongClickListener(shoppingList: ShopListItem) {
-        // TODO manage button showing
+        manageButtonsVisibility()
     }
 
+    private fun manageButtonsVisibility() {
+        if (recyclerViewAdapter.selectionMode) {
+            fabArchive.show()
+            fabAddShoppingList.hide()
+        } else {
+            fabArchive.hide()
+            fabAddShoppingList.show()
+        }
+    }
 
+    inner class OnArchiveListener : View.OnClickListener,
+        ConfirmBottomDialog.OnButtonClickListener {
+        override fun onClick(p0: View?) {
+            val confirmDialog = ConfirmBottomDialog()
+            confirmDialog.onButtonClickListener = this
+            confirmDialog.show(parentFragmentManager, "BOTTOM_DIALOG_CONFIRM")
+        }
+
+        override fun onPositiveClickListener(dialog: Dialog?) {
+            viewModel.updateArchivedStatus(true, recyclerViewAdapter.getSelectedShopLists())
+            recyclerViewAdapter.quitSelection()
+            manageButtonsVisibility()
+            dialog?.dismiss()
+        }
+
+        override fun onNegativeClickListener(dialog: Dialog?) {
+            dialog?.dismiss()
+        }
+
+    }
 }

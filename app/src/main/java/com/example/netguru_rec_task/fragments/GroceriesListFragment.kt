@@ -90,7 +90,7 @@ class GroceriesListFragment : Fragment(),
         }
 
         // Delete button
-        fabDelete = view.findViewById(R.id.fragment_floatingActionButton_delete)
+        fabDelete = view.findViewById(R.id.fragment_shoppingList_fab_delete)
         fabDelete.setOnClickListener(OnDeleteButtonListener())
 
         // RecyclerView setup
@@ -119,7 +119,7 @@ class GroceriesListFragment : Fragment(),
 
     }
 
-    private fun manageButtonVisibility() {
+    private fun manageButtonsVisibility() {
         if (recyclerViewAdapter.selectionMode) {
             fabDelete.show()
             fabAddGrocery.hide()
@@ -134,7 +134,7 @@ class GroceriesListFragment : Fragment(),
     }
 
     override fun onItemLongClickListener(groceryItem: GroceryItem, position: Int) {
-        manageButtonVisibility()
+        manageButtonsVisibility()
     }
 
     /**
@@ -180,7 +180,7 @@ class GroceriesListFragment : Fragment(),
         override fun onPositiveClickListener(dialog: Dialog?) {
             viewModel.deleteList(recyclerViewAdapter.getGroceriesToDelete())
             recyclerViewAdapter.quitSelection()
-            manageButtonVisibility()
+            manageButtonsVisibility()
             dialog?.dismiss()
         }
 
