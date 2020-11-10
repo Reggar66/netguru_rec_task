@@ -27,6 +27,13 @@ class ShopListViewModel(application: Application) : AndroidViewModel(application
         repository.insert(shopListItem)
     }
 
+    fun deleteList(listsToDelete: List<ShopListItem>) = viewModelScope.launch(Dispatchers.IO) {
+        for (list in listsToDelete) {
+            repository.deleteGroceriesFromParentList(list.id)
+        }
+        repository.deleteList(listsToDelete)
+    }
+
     fun updateArchivedStatus(isArchived: Boolean, selectedList: List<ShopListItem>) =
         viewModelScope.launch(Dispatchers.IO) {
             for (shopList in selectedList) {

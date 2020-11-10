@@ -21,7 +21,11 @@ class ShopListRepository(private val shopListItemDao: ShopListItemDao) {
         shopListItemDao.updateArchivedStatus(isArchived, listId)
     }
 
-    suspend fun insert(groceryItem: GroceryItem) {
+    suspend fun deleteList(listToDelete: List<ShopListItem>) {
+        shopListItemDao.deleteList(listToDelete)
+    }
 
+    suspend fun deleteGroceriesFromParentList(parentListId: Int) {
+        shopListItemDao.deleteGroceriesFromParentList(parentListId)
     }
 }

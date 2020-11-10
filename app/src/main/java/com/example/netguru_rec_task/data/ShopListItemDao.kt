@@ -15,6 +15,12 @@ interface ShopListItemDao {
     @Delete
     suspend fun delete(shopListItem: ShopListItem?)
 
+    @Delete
+    suspend fun deleteList(listToDelete: List<ShopListItem>)
+
+    @Query("DELETE FROM groceries_list WHERE shopping_list_id = :parentListId")
+    suspend fun deleteGroceriesFromParentList(parentListId: Int)
+
     @Query("SELECT * FROM shop_lists WHERE archived = :isArchived ORDER BY timestamp ASC")
     fun liveDataGetAllShopLists(isArchived: Boolean): LiveData<List<ShopListItem>>
 

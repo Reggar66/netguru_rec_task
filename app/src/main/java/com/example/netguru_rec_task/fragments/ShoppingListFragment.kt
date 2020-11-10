@@ -96,7 +96,7 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
         }
     }
 
-    inner class OnArchiveListener : View.OnClickListener,
+    private inner class OnArchiveListener : View.OnClickListener,
         ConfirmBottomDialog.OnButtonClickListener {
         override fun onClick(p0: View?) {
             val confirmDialog = ConfirmBottomDialog()

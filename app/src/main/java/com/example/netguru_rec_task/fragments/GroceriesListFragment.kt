@@ -169,7 +169,7 @@ class GroceriesListFragment : Fragment(),
      * Listener for delete button.
      * Deletes groceries.
      */
-    inner class OnDeleteButtonListener : View.OnClickListener,
+    private inner class OnDeleteButtonListener : View.OnClickListener,
         ConfirmBottomDialog.OnButtonClickListener {
         override fun onClick(p0: View?) {
             val confirmDialog = ConfirmBottomDialog()
@@ -187,7 +187,5 @@ class GroceriesListFragment : Fragment(),
         override fun onNegativeClickListener(dialog: Dialog?) {
             dialog?.dismiss()
         }
-
-
     }
 }
