@@ -1,5 +1,6 @@
 package com.example.netguru_rec_task.fragments
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.netguru_rec_task.ConfirmBottomDialog
 import com.example.netguru_rec_task.R
 import com.example.netguru_rec_task.adapters.GroceriesAdapter
 import com.example.netguru_rec_task.models.GroceryItem
@@ -167,11 +169,25 @@ class GroceriesListFragment : Fragment(),
      * Listener for delete button.
      * Deletes groceries.
      */
-    inner class OnDeleteButtonListener() : View.OnClickListener {
+    inner class OnDeleteButtonListener : View.OnClickListener,
+        ConfirmBottomDialog.OnButtonClickListener {
         override fun onClick(p0: View?) {
+            val confirmDialog = ConfirmBottomDialog()
+            confirmDialog.onButtonClickListener = this
+            confirmDialog.show(parentFragmentManager, "BOTTOM_DIALOG_CONFIRM")
+        }
+
+        override fun onPositiveClickListener(dialog: Dialog?) {
             viewModel.deleteList(recyclerViewAdapter.getGroceriesToDelete())
             recyclerViewAdapter.quitSelection()
             manageButtonVisibility()
+            dialog?.dismiss()
         }
+
+        override fun onNegativeClickListener(dialog: Dialog?) {
+            dialog?.dismiss()
+        }
+
+
     }
 }
