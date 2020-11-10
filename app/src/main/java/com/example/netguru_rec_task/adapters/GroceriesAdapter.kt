@@ -96,7 +96,7 @@ class GroceriesAdapter() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = groceries[position]
         holder.textViewListName.text = item.itemName
-        if (item.isCompleted && !selectionMode) {
+        if (item.isCompleted) {
             holder.textViewListName.apply {
                 paintFlags = paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
             }
