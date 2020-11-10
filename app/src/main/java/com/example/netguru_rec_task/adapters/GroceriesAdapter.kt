@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.netguru_rec_task.R
@@ -33,6 +35,8 @@ class GroceriesAdapter() :
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageViewIcon: ImageView =
+            itemView.findViewById(R.id.fragment_shoppingListItem_imageView_icon)
         val textViewListName: TextView =
             itemView.findViewById(R.id.fragment_shoppingListItem_textView_name)
         val textViewGroceriesCounter: TextView =
@@ -96,6 +100,12 @@ class GroceriesAdapter() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = groceries[position]
         holder.textViewListName.text = item.itemName
+        holder.imageViewIcon.setImageDrawable(
+            ContextCompat.getDrawable(
+                context,
+                R.drawable.ic_baseline_shopping_basket_24
+            )
+        )
         if (item.isCompleted) {
             holder.textViewListName.apply {
                 paintFlags = paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
