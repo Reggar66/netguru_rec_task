@@ -35,7 +35,7 @@ class ArchivedListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewManager = LinearLayoutManager(requireContext())
-        recyclerViewAdapter = ShoppingListAdapter(viewModel)
+        recyclerViewAdapter = ShoppingListAdapter()
         val fabAddShoppingList =
             view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
         fabAddShoppingList.hide()

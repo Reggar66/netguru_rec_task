@@ -18,7 +18,8 @@ import com.example.netguru_rec_task.models.ShopListItem
 import com.example.netguru_rec_task.viewModels.ShopListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener {
+class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener,
+    ShoppingListAdapter.OnItemLongClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: ShoppingListAdapter
@@ -38,8 +39,9 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
         super.onViewCreated(view, savedInstanceState)
 
         viewManager = LinearLayoutManager(requireContext())
-        recyclerViewAdapter = ShoppingListAdapter(viewModel)
+        recyclerViewAdapter = ShoppingListAdapter()
         recyclerViewAdapter.onItemClickListener = this
+        recyclerViewAdapter.onItemLongClickListener = this
 
         recyclerView =
             view.findViewById<RecyclerView>(R.id.fragment_shoppingList_recyclerView).apply {
@@ -72,6 +74,10 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
             MainFragmentDirections.actionMainFragmentToGroceriesListFragment(shoppingList.id)
         val navController = findNavController()
         navController.navigate(action)
+    }
+
+    override fun onItemLongClickListener(shoppingList: ShopListItem) {
+        // TODO manage button showing
     }
 
 
