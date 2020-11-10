@@ -26,8 +26,8 @@ class GroceriesViewModel(
         repository.insert(groceryItem)
     }
 
-    fun delete(groceryItems: List<GroceryItem>) = viewModelScope.launch(Dispatchers.IO) {
-        repository.delete(groceryItems)
+    fun deleteList(groceryItems: List<GroceryItem>) = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteList(groceryItems)
     }
 
     suspend fun getParentShopList(shopListId: Int): ShopListItem {

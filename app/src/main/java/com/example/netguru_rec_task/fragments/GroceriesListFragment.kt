@@ -169,7 +169,7 @@ class GroceriesListFragment : Fragment(),
      */
     inner class OnDeleteButtonListener() : View.OnClickListener {
         override fun onClick(p0: View?) {
-            viewModel.delete(recyclerViewAdapter.getGroceriesToDelete())
+            viewModel.deleteList(recyclerViewAdapter.getGroceriesToDelete())
             recyclerViewAdapter.quitSelection()
             manageButtonVisibility()
         }
