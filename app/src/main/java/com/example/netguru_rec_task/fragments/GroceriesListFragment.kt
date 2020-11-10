@@ -57,7 +57,11 @@ class GroceriesListFragment : Fragment(),
         // Retrieve parent shopList and set fragment name
         viewModel.viewModelScope.launch {
             parentShopList = viewModel.getParentShopList(args.shopListId)
-            requireActivity().title = parentShopList.listName
+            var title = parentShopList.listName
+            if (args.archived) {
+                title += "[" + getString(R.string.archived) + "]"
+            }
+            requireActivity().title = title
         }
 
         return inflater.inflate(R.layout.fragment_shopping_list, container, false)
@@ -88,6 +92,8 @@ class GroceriesListFragment : Fragment(),
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             editTextName.requestFocus()
         }
+        if (args.archived)
+            fabAddGrocery.visibility = View.GONE
 
         // Delete button
         fabDelete = view.findViewById(R.id.fragment_shoppingList_fab_delete)
@@ -95,9 +101,11 @@ class GroceriesListFragment : Fragment(),
 
         // RecyclerView setup
         viewManager = LinearLayoutManager(requireContext())
-        recyclerViewAdapter = GroceriesAdapter()
-        recyclerViewAdapter.onItemClickListener = this
-        recyclerViewAdapter.onItemLongClickListener = this
+        recyclerViewAdapter = GroceriesAdapter(args.archived)
+        if (!args.archived) {
+            recyclerViewAdapter.onItemClickListener = this
+            recyclerViewAdapter.onItemLongClickListener = this
+        }
         recyclerView =
             view.findViewById<RecyclerView>(R.id.fragment_shoppingList_recyclerView).apply {
                 setHasFixedSize(true)

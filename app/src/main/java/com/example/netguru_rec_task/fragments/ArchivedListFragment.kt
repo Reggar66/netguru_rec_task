@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -47,6 +48,7 @@ class ArchivedListFragment : Fragment(),
         viewManager = LinearLayoutManager(requireContext())
         recyclerViewAdapter = ShoppingListAdapter()
         recyclerViewAdapter.onItemLongClickListener = this
+        recyclerViewAdapter.onItemClickListener = this
         recyclerView =
             view.findViewById<RecyclerView>(R.id.fragment_shoppingList_recyclerView).apply {
                 setHasFixedSize(true)
@@ -92,7 +94,13 @@ class ArchivedListFragment : Fragment(),
     }
 
     override fun onItemClickListener(shoppingList: ShopListItem) {
-        // TODO show archived groceries
+        val action =
+            MainFragmentDirections.actionMainFragmentToGroceriesListFragment(
+                shoppingList.id,
+                shoppingList.isArchived
+            )
+        val navController = findNavController()
+        navController.navigate(action)
     }
 
     override fun onItemLongClickListener(shoppingList: ShopListItem) {

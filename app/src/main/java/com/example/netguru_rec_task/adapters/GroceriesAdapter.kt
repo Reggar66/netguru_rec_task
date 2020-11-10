@@ -14,7 +14,9 @@ import com.example.netguru_rec_task.models.GroceryItem
 import com.example.netguru_rec_task.utils.GroceryDiffUtilCallback
 import com.google.android.material.color.MaterialColors
 
-class GroceriesAdapter() :
+class GroceriesAdapter(
+    private val archivedStatus: Boolean
+) :
     RecyclerView.Adapter<GroceriesAdapter.ViewHolder>() {
 
     private lateinit var context: Context
@@ -43,34 +45,37 @@ class GroceriesAdapter() :
             itemView.findViewById(R.id.fragment_shoppingListItem_textView_counter)
 
         init {
-            itemView.setOnClickListener {
+            if (!archivedStatus) {
+                itemView.setOnClickListener {
 
-                if (selectionMode) {
-                    manageSelection()
-                } else {
-                    onItemClickListener?.onItemClickListener(
+
+                    if (selectionMode) {
+                        manageSelection()
+                    } else {
+                        onItemClickListener?.onItemClickListener(
+                            groceries[adapterPosition],
+                            adapterPosition
+                        )
+                    }
+
+                }
+
+                itemView.setOnLongClickListener {
+                    if (selectionMode) {
+                        selectionMode = false
+                        deselectAll()
+                    } else {
+                        selectionMode = true
+                        groceries[adapterPosition].isSelected = true
+                        notifyItemChanged(adapterPosition)
+                    }
+
+                    onItemLongClickListener?.onItemLongClickListener(
                         groceries[adapterPosition],
                         adapterPosition
                     )
+                    return@setOnLongClickListener true
                 }
-
-            }
-
-            itemView.setOnLongClickListener {
-                if (selectionMode) {
-                    selectionMode = false
-                    deselectAll()
-                } else {
-                    selectionMode = true
-                    groceries[adapterPosition].isSelected = true
-                    notifyItemChanged(adapterPosition)
-                }
-
-                onItemLongClickListener?.onItemLongClickListener(
-                    groceries[adapterPosition],
-                    adapterPosition
-                )
-                return@setOnLongClickListener true
             }
         }
 

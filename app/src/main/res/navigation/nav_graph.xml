@@ -19,5 +19,9 @@
             android:name="shopListId"
             android:defaultValue="0"
             app:argType="integer" />
+        <argument
+            android:name="archived"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>
