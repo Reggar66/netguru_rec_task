@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
@@ -25,7 +24,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
 class GroceriesListFragment : Fragment(),
-    GroceriesAdapter.OnItemClickListener {
+    GroceriesAdapter.OnItemClickListener,
+    GroceriesAdapter.OnItemLongClickListener {
 
     private val args: GroceriesListFragmentArgs by navArgs()
 
@@ -35,6 +35,8 @@ class GroceriesListFragment : Fragment(),
     private lateinit var viewModel: GroceriesViewModel
     private lateinit var parentShopList: ShopListItem
     private lateinit var bottomSheet: View
+    private lateinit var fabDelete: FloatingActionButton
+    private lateinit var fabAddGrocery: FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,21 +75,27 @@ class GroceriesListFragment : Fragment(),
         val fabApplyGrocery =
             view.findViewById<FloatingActionButton>(R.id.bottomSheet_floatingActionButton_apply)
         fabApplyGrocery.setOnClickListener(OnApplyListener(editTextName, editTextQuantity))
-        val fabAddGrocery =
-            view.findViewById<FloatingActionButton>(R.id.fragment_shoppingList_fab)
-        fabAddGrocery.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            editTextName.requestFocus()
-        }
         val imageViewClose = view.findViewById<ImageView>(R.id.bottomSheet_imageView_hide)
         imageViewClose.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
 
+        // Button for opening bottom sheet
+        fabAddGrocery = view.findViewById(R.id.fragment_shoppingList_fab)
+        fabAddGrocery.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            editTextName.requestFocus()
+        }
+
+        // Delete button
+        fabDelete = view.findViewById(R.id.fragment_floatingActionButton_delete)
+        fabDelete.setOnClickListener(OnDeleteButtonListener())
+
         // RecyclerView setup
         viewManager = LinearLayoutManager(requireContext())
         recyclerViewAdapter = GroceriesAdapter()
         recyclerViewAdapter.onItemClickListener = this
+        recyclerViewAdapter.onItemLongClickListener = this
         recyclerView =
             view.findViewById<RecyclerView>(R.id.fragment_shoppingList_recyclerView).apply {
                 setHasFixedSize(true)
@@ -109,8 +117,22 @@ class GroceriesListFragment : Fragment(),
 
     }
 
-    override fun onItemClickListener(groceriesItem: GroceryItem, position: Int) {
-        viewModel.updateCompletionStatus(!groceriesItem.isCompleted, groceriesItem.id)
+    private fun manageButtonVisibility() {
+        if (recyclerViewAdapter.selectionMode) {
+            fabDelete.show()
+            fabAddGrocery.hide()
+        } else {
+            fabDelete.hide()
+            fabAddGrocery.show()
+        }
+    }
+
+    override fun onItemClickListener(groceryItem: GroceryItem, position: Int) {
+        viewModel.updateCompletionStatus(!groceryItem.isCompleted, groceryItem.id)
+    }
+
+    override fun onItemLongClickListener(groceryItem: GroceryItem, position: Int) {
+        manageButtonVisibility()
     }
 
     /**
@@ -139,6 +161,17 @@ class GroceriesListFragment : Fragment(),
             editTextQuantity.text.clear()
             editTextName.requestFocus()
         }
+    }
 
+    /**
+     * Listener for delete button.
+     * Deletes groceries.
+     */
+    inner class OnDeleteButtonListener() : View.OnClickListener {
+        override fun onClick(p0: View?) {
+            viewModel.delete(recyclerViewAdapter.getGroceriesToDelete())
+            recyclerViewAdapter.quitSelection()
+            manageButtonVisibility()
+        }
     }
 }

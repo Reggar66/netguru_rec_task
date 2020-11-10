@@ -17,6 +17,10 @@ class GroceryItemRepository(
         groceryItemDao.insertAll(groceryItem)
     }
 
+    suspend fun delete(groceryItems: List<GroceryItem>) {
+        groceryItemDao.deleteList(groceryItems)
+    }
+
     suspend fun getParentShopList(shopListId: Int): ShopListItem {
         return groceryItemDao.getParentShopList(shopListId)
     }

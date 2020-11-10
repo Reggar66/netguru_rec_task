@@ -1,7 +1,6 @@
 package com.example.netguru_rec_task.viewModels
 
 import android.app.Application
-import android.text.BoringLayout
 import androidx.lifecycle.*
 import com.example.netguru_rec_task.data.DatabaseSingleton
 import com.example.netguru_rec_task.models.GroceryItem
@@ -25,6 +24,10 @@ class GroceriesViewModel(
 
     fun insert(groceryItem: GroceryItem) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(groceryItem)
+    }
+
+    fun delete(groceryItems: List<GroceryItem>) = viewModelScope.launch(Dispatchers.IO) {
+        repository.delete(groceryItems)
     }
 
     suspend fun getParentShopList(shopListId: Int): ShopListItem {

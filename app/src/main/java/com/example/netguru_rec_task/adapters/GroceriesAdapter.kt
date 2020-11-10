@@ -17,13 +17,19 @@ class GroceriesAdapter() :
 
     private lateinit var context: Context
     private val groceries = ArrayList<GroceryItem>()
-    private var selectionMode = false
+    var selectionMode = false
+        private set
     private var colorSelection: Int = -1
 
     var onItemClickListener: OnItemClickListener? = null
+    var onItemLongClickListener: OnItemLongClickListener? = null
 
     interface OnItemClickListener {
-        fun onItemClickListener(groceriesItem: GroceryItem, position: Int)
+        fun onItemClickListener(groceryItem: GroceryItem, position: Int)
+    }
+
+    interface OnItemLongClickListener {
+        fun onItemLongClickListener(groceryItem: GroceryItem, position: Int)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -55,6 +61,11 @@ class GroceriesAdapter() :
                     groceries[adapterPosition].isSelected = true
                     notifyItemChanged(adapterPosition)
                 }
+
+                onItemLongClickListener?.onItemLongClickListener(
+                    groceries[adapterPosition],
+                    adapterPosition
+                )
                 return@setOnLongClickListener true
             }
         }
@@ -125,5 +136,19 @@ class GroceriesAdapter() :
                 notifyItemChanged(index)
             }
         }
+    }
+
+    fun quitSelection() {
+        selectionMode = false
+        deselectAll()
+    }
+
+    fun getGroceriesToDelete(): List<GroceryItem> {
+        val listToDelete = ArrayList<GroceryItem>()
+        for (grocery in groceries) {
+            if (grocery.isSelected)
+                listToDelete.add(grocery)
+        }
+        return listToDelete
     }
 }
