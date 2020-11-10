@@ -96,8 +96,7 @@ class ShoppingListAdapter() :
         val item = shopListItems[position]
         holder.textViewListName.text = item.listName
         holder.textViewGroceriesCounter.text =
-                // TODO extract to string resources
-            """Groceries done ${item.groceriesDone}/${item.groceriesNumber}"""
+            context.getString(R.string.groceries_done, item.groceriesDone, item.groceriesNumber)
 
         if (item.isSelected) {
             holder.itemView.setBackgroundColor(colorSelection)
