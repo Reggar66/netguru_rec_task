@@ -13,7 +13,6 @@ public class DatabaseSingleton {
         database = Room.databaseBuilder(context.getApplicationContext(),
                 AppDatabase.class,
                 "shopping-list.db")
-                .fallbackToDestructiveMigration() // TODO remove it later!
                 .build();
     }
 
