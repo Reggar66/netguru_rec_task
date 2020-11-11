@@ -7,7 +7,7 @@ import com.example.netguru_rec_task.models.ShopListItem
 
 class GroceryItemRepository(
     private val groceryItemDao: GroceryItemDao,
-    private val shopListId: Int
+    shopListId: Int
 ) {
     val allGroceryItems: LiveData<List<GroceryItem>> =
         groceryItemDao.liveDataGetAllGroceriesForShopList(shopListId)

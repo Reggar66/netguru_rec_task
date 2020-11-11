@@ -2,7 +2,6 @@ package com.example.netguru_rec_task.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.netguru_rec_task.models.GroceryItem
-import kotlin.math.sign
 
 class GroceryDiffUtilCallback(
     private val oldGroceries: List<GroceryItem>,

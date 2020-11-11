@@ -31,7 +31,7 @@ class GroceriesListFragment : Fragment(),
 
     private val args: GroceriesListFragmentArgs by navArgs()
 
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: GroceriesAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var viewModel: GroceriesViewModel
@@ -120,7 +120,7 @@ class GroceriesListFragment : Fragment(),
             }
 
         // Observing data and updating UI
-        viewModel.allGroceriesForShopList.observe(viewLifecycleOwner, Observer { groceries ->
+        viewModel.allGroceriesForShopList.observe(viewLifecycleOwner, { groceries ->
             recyclerViewAdapter.setGroceries(groceries)
             viewModel.updateGroceriesNumbers(args.shopListId)
         })

@@ -78,7 +78,7 @@ class ArchivedListFragment : Fragment(),
         )
         fabRestore.setOnClickListener(OnUnArchiveListener())
 
-        viewModel.allArchivedShopLists.observe(viewLifecycleOwner, Observer { list ->
+        viewModel.allArchivedShopLists.observe(viewLifecycleOwner, { list ->
             recyclerViewAdapter.setShopList(list)
         })
     }

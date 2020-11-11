@@ -61,7 +61,7 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
                 )
             }
 
-        viewModel.allShopLists.observe(viewLifecycleOwner, Observer { list ->
+        viewModel.allShopLists.observe(viewLifecycleOwner, { list ->
             recyclerViewAdapter.setShopList(list)
         })
 

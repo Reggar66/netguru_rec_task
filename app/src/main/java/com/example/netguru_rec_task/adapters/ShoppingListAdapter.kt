@@ -5,16 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.netguru_rec_task.R
 import com.example.netguru_rec_task.models.ShopListItem
 import com.example.netguru_rec_task.utils.ShopListDiffUtilCallback
-import com.example.netguru_rec_task.viewModels.ShopListViewModel
 import com.google.android.material.color.MaterialColors
 
-class ShoppingListAdapter() :
+class ShoppingListAdapter :
     RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>() {
 
 
