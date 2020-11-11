@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primaryColor_day">#4CAF50</color>
+    <color name="primaryLightColor_day">#C8E6C9</color>
+    <color name="primaryDarkColor_day">#388E3C</color>
+    <color name="secondaryColor_day">#42a5f4</color>
+    <color name="secondaryLightColor_day">#80d6ff</color>
+    <color name="secondaryDarkColor_day">#0077c1</color>
+    <color name="primaryTextColor_day">#212121</color>
+    <color name="secondaryTextColor_day">#757575</color>
+    <color name="tabUnselected_light_day">#808080</color>
+
+    <color name="tabBackground_night">#121212</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

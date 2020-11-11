@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="List Name"
+            android:textColor="?attr/colorPrimary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -43,6 +44,7 @@
             android:id="@+id/fragment_shoppingListItem_textView_counter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
             tools:text="Groceries done 5/25" />
 
     </LinearLayout>

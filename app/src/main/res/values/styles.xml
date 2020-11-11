@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Net.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabIconTint">@color/color_tab_icon_selector</item>
+        <item name="tabTextColor">@color/color_tab_icon_selector</item>
+        <item name="tabIndicatorColor">?attr/tabIndicatorColor</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="Net.ToolBar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">?attr/titleTextColor</item>
+        <item name="colorControlNormal">?attr/titleTextColor</item>
+        <item name="android:background">?attr/toolbarBackgroundColor</item>
+    </style>
+</resources>
