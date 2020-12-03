@@ -6,6 +6,12 @@
         <item name="tabTextColor">@color/color_tab_icon_selector</item>
         <item name="tabIndicatorColor">?attr/tabIndicatorColor</item>
         <item name="android:elevation">4dp</item>
+        <item name="android:background">?attr/toolbarBackgroundColor</item>
+        <item name="tabTextAppearance">@style/TabLabelTextStyle</item>
+    </style>
+
+    <style name="TabLabelTextStyle" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="Net.ToolBar" parent="ThemeOverlay.AppCompat.ActionBar">

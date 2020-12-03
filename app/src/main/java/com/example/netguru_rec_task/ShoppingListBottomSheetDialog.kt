@@ -1,17 +1,26 @@
 package com.example.netguru_rec_task
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.DialogFragment
 import com.example.netguru_rec_task.models.ShopListItem
 import com.example.netguru_rec_task.viewModels.ShopListViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ShoppingListBottomSheetDialog(private val viewModel: ShopListViewModel) :
+class ShoppingListBottomSheetDialog:
     BottomSheetDialogFragment() {
+
+    var listener: OnButtonClickListener? = null
+
+    interface OnButtonClickListener {
+        fun onApplyClickListener(name: String, time: Long, dialog: Dialog?)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,8 +41,8 @@ class ShoppingListBottomSheetDialog(private val viewModel: ShopListViewModel) :
         fabApply.setOnClickListener {
             val name = editTextName.text.toString()
             val time = System.currentTimeMillis()
-            viewModel.insert(ShopListItem(name, time))
-            dialog?.dismiss()
+
+            listener?.onApplyClickListener(name, time, dialog)
         }
     }
 }

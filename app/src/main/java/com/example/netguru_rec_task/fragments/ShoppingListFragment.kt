@@ -21,7 +21,8 @@ import com.example.netguru_rec_task.viewModels.ShopListViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener,
-    ShoppingListAdapter.OnItemLongClickListener {
+    ShoppingListAdapter.OnItemLongClickListener,
+    ShoppingListBottomSheetDialog.OnButtonClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerViewAdapter: ShoppingListAdapter
@@ -67,7 +68,8 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
 
         fabAddShoppingList = view.findViewById(R.id.fragment_shoppingList_fab)
         fabAddShoppingList.setOnClickListener {
-            val bottomDialog = ShoppingListBottomSheetDialog(viewModel)
+            val bottomDialog = ShoppingListBottomSheetDialog()
+            bottomDialog.listener = this
             bottomDialog.show(parentFragmentManager, "BOTTOM_SHEET_DIALOG_SHOPPING_LIST")
         }
 
@@ -96,6 +98,14 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
         }
     }
 
+    override fun onApplyClickListener(name: String, time: Long, dialog: Dialog?) {
+        viewModel.insert(ShopListItem(name, time))
+        dialog?.dismiss()
+    }
+
+    /**
+     * OnClickListener for archive list
+     */
     private inner class OnArchiveListener : View.OnClickListener,
         ConfirmBottomDialog.OnButtonClickListener {
         override fun onClick(p0: View?) {
@@ -114,6 +124,5 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
         override fun onNegativeClickListener(dialog: Dialog?) {
             dialog?.dismiss()
         }
-
     }
 }
