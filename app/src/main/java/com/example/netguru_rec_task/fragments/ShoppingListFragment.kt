@@ -28,6 +28,7 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
     private lateinit var recyclerViewAdapter: ShoppingListAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var viewModel: ShopListViewModel
+    private lateinit var bottomDialog: ShoppingListBottomSheetDialog
 
     private lateinit var fabAddShoppingList: FloatingActionButton
     private lateinit var fabArchive: FloatingActionButton
@@ -68,13 +69,18 @@ class ShoppingListFragment : Fragment(), ShoppingListAdapter.OnItemClickListener
 
         fabAddShoppingList = view.findViewById(R.id.fragment_shoppingList_fab)
         fabAddShoppingList.setOnClickListener {
-            val bottomDialog = ShoppingListBottomSheetDialog()
+            bottomDialog = ShoppingListBottomSheetDialog()
             bottomDialog.listener = this
             bottomDialog.show(parentFragmentManager, "BOTTOM_SHEET_DIALOG_SHOPPING_LIST")
         }
 
         fabArchive = view.findViewById(R.id.fragment_shoppingList_fab_archive)
         fabArchive.setOnClickListener(OnArchiveListener())
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bottomDialog.dismiss()
     }
 
     override fun onItemClickListener(shoppingList: ShopListItem) {
